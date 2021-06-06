@@ -60,7 +60,7 @@
 %=================================================================
 % Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, lineno, float, amsmath, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, soul, multirow, microtype, tikz, totcount, changepage, paracol, attrib, upgreek, cleveref, amsthm, hyphenat, natbib, hyperref, footmisc, url, geometry, newfloat, caption
 \usepackage{cleveref}
-\usepackage{overpic}
+\usepackage{enumitem}
 %=================================================================
 %% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
 %% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
@@ -94,7 +94,7 @@ $^{3}$ \quad Centre Tecnològic de Telecomunicacions de Catalunya (CTTC/CERCA), 
 $^{4}$ \quad Volta Networks, Barcelona, Spain}
 
 % Contact information of the corresponding author
-\corres{Correspondence: samier.barguil@estudiante.uam.es)}
+\corres{Correspondence: samier.barguil@estudiante.uam.es}
 
 % Current address and/or shared authorship
 \firstnote{Current address: samier.barguil@estudiante.uam.es} 
@@ -106,11 +106,12 @@ $^{4}$ \quad Volta Networks, Barcelona, Spain}
 %\conference{} % An extended version of a conference paper
 
 % Abstract (Do not insert blank lines, i.e. \\) 
-\abstract{(Victor) We validate the deployment of isolated transport network slices in IP over DWDM network. To this end, an isolated transport network slice is deployed using multi-layer isolation mechanisms based on OpenConfig and ONF Transport API.
-\\A single paragraph of about 200 words maximum. For research articles, abstracts should give a pertinent overview of the work. We strongly encourage authors to use the following style of structured abstracts, but without headings: (1) Background: place the question addressed in a broad context and highlight the purpose of the study; (2) Methods: describe briefly the main methods or treatments applied; (3) Results: summarize the article's main findings; (4) Conclusion: indicate the main conclusions or interpretations. The abstract should be an objective representation of the article, it must not contain results which are not presented and substantiated in the main text and should not exaggerate the main conclusions.}
+
+\abstract{Network Operators has been dealing with the necessity of a dynamic network resources allocation to provide a new generation of customer-tailored applications. In that sense, Telecom providers have to migrate their BSS/OSS systems and network infrastructure to more modern solutions to introduce end-to-end automation and support the new use cases derived from the 5G adoption and transport network slices. In general, there is a joint agreement on making this transition to an architecture defined by programmable interfaces and standard protocols. Hence, this paper uses the iFusion architecture to control and program the network infrastructure. The work presents an experimental validation of the network slicing instantiation in an IP/Optical environment using a set of standard protocols and interfaces. The work provides results of the creation, modification and deletion of the network slices. Furthermore, it demonstrates the usage of standard communication protocols (Netconf and Restconf) in combination with standard YANG data models.}
+%A single paragraph of about 200 words maximum. For research articles, abstracts should give a pertinent overview of the work. We strongly encourage authors to use the following style of structured abstracts, but without headings: (1) Background: place the question addressed in a broad context and highlight the purpose of the study; (2) Methods: describe briefly the main methods or treatments applied; (3) Results: summarize the article's main findings; (4) Conclusion: indicate the main conclusions or interpretations. The abstract should be an objective representation of the article, it must not contain results which are not presented and substantiated in the main text and should not exaggerate the main conclusions.}
 
 % Keywords
-\keyword{keyword 1; keyword 2; keyword 3 (List three to ten pertinent keywords specific to the article; yet reasonably common within the subject discipline.)} 
+\keyword{} 
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -145,7 +146,13 @@ $^{4}$ \quad Volta Networks, Barcelona, Spain}
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Introduction - Luis}
+\section{Introduction}
+
+Network slicing is positioned as the next paradigm for service delivery in telecom operator networks. the slicing concept departs from the idea of allocating network resources to customer services on demand, leverages on the paradigms of Software Defined Networking (SDN) and Network Function Virtualization (NFV) \cite{ordonez2017network}, being those resources dedicated to them during service lifetime. Those assigned resources (including compute, storage and transport ones) can be either physical or virtual, tailored to the customer need expressed through the slice request. Since distinct customers could have different requirements to be satisfied, different slice types can be considered from the point of view of management and control, as defined in \cite{contreras2017network}.
+
+The way of slicing can be seen as an alternative form of consuming network capabilities, permitting to address the particular needs of new industries and markets \cite{ordonez2017network} as was not possible before. Specific service characteristics like deterministic extreme low latency or guaranteed high bandwidth, different degrees of isolation (with respect other customers’ services), scalability adapted to the actual demand, or  resource management and control can be now enabled, allowing more sophisticated services to emerge and co-exist in a commonly shared infrastructure.
+
+In order to enable this flexible consumption of network capabilities, it is necessary to develop new forms of network control to make possible a dynamic partitioning and assignment of resources end-to-end. Therefore, several initiatives have been discussed across the industry, including the IP network resources management (L2 \cite{barguil2021l2nm} and L3VPNs \cite{Aguado.2021l3nm}), the optical layer management (Transport API \cite{vilalta2018experimental}) or the network devices configuration (Openconfig \cite{shaikhopenconfig}).
 
 %The provisioning of connectivity services that guarantee a specific set of Service Level Objectives (SLO) regarding network resources is expected to benefit many use cases, such as beyond 5G networks or NFV and data center interconnects. Transport network slices provide connectivity coupled with a set of specific network resources commitment between several endpoints over a shared network infrastructure \cite{transportslice21}.  
 
@@ -157,106 +164,165 @@ $^{4}$ \quad Volta Networks, Barcelona, Spain}
 
 %Another well demonstrated data model is OpenConfig \cite{openconfig}, which provides vendor-neutral YANG data models for various network elements, from routers to optical switches. The IP SDN Domain Controller will be responsible for allocating, instantiating and configuring the multiple (virtual) routers and interfaces depending on the required slice isolation level. OpenConfig data models usage is combined with several protocols such as gRPC or NETCONF. The gRPC protocols provide high performance and scalability to the proposed architecture.
 
-%This paper presents an end-to-end architecture to provide transport network slices deployed over multi-layer IP over DWDM networks. Several degrees of isolation (from hard to soft) might be required and implemented in the requested transport network slice. This is the first paper to explore transport network slice isolation using an IP over DWDM network. In order to validate this proposed architecture, we present a proof-of-concept in Telefonica and CTTC Laboratories.
+This paper extends the work presented in the lastest OFC conference \cite{OFC2021alcala}. In addition, this work adds a set of tests; Including creating two isolated network slices, prefixes addition and modification to each slice and, slices deletion. A last set of tests included the service continuity evaluation after a physical device reset. For the whole set of experiments, a hierarchical control architecture over multi-layer IP over DWDM networks was used. 
 
+%Several degrees of isolation might be required and implemented in the requested transport network slice.
 
+This paper is organized as follows. The authors describe those concepts in \cref{sec:slicing}. \Cref{sec:arch} described the whole control architecture used for the network slice instantiation in a service provider environment. \Cref{sec:instantiation} describes the proposed architecture's implementation choices. The authors selected one of those choices and made a proof-of-concept in Telefonica and CTTC Laboratories, \cref{sec:results} includes the results.
+
+The list of abbreviations and its definition is defined in \cref{tab:abbreviations}.
+
+\begin{table}[htb!]
+\caption{List of abbreviations used across the document}
+\label{tab:abbreviations}
+\begin{tabular}{|l|l|}
+\hline
+Abbreviation & \multicolumn{1}{c|}{Definition}              \\ \hline
+3GPP         & 3rd Generation Partnership Project           \\ \hline
+API          & Application programming interface            \\ \hline
+IETF         & Internet Engineering Task Force              \\ \hline
+eMBB.        & Enhanced Mobile Broadband                    \\ \hline
+L2SM         & L2VPN Service Model                          \\ \hline
+L2NM         & L2VPN Network Model                          \\ \hline
+L3SM         & L3VPN Service Model                          \\ \hline
+L3NM         & L3VPN Network Model                          \\ \hline
+MC           & Mobile Core                                  \\ \hline
+mMTC         & Massive Machine Type Communication           \\ \hline
+MPLS         & Multiprotocol Label Switching                \\ \hline
+NASS         & Network As A Service                         \\ \hline
+NGMN         & Next Generation Mobile Networks              \\ \hline
+NSI          & Network Slice Instance                       \\ \hline
+ONF          & Open Networking Foundation                   \\ \hline
+OSS          & Operation Support Systems                    \\ \hline
+QoS          & Quality of service                           \\ \hline
+RAN          & Radio Access Network                         \\ \hline
+SDN          & Software Defined Network                     \\ \hline
+SI           & Service Instance                             \\ \hline
+URLLC        & Ultra Reliable Low Latency Communications    \\ \hline
+VSI          & Virtual switching Interfaces                 \\ \hline
+VRF          & Virtual Routing and Forwarding.              \\ \hline
+YANG         & Yet Another Next Generation                  \\ \hline
+\end{tabular}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Network Slicing Concepts}
+\label{sec:slicing}
 
-In the context of transport networks, the NGMN defines two main concepts\cite{alliance2016description}: 
+Network slicing refers to the partitioning of one physical network into multiple virtual networks, each network slice is architected and optimized for a specific application/service.  In this context, the Next Generation Mobile Networks (NGMN) defines two main concepts \cite{alliance2016description}: 
 \begin{itemize}
     \item The \textit{Service Instance} (SI) is an end-user service or a business service realized in a Network Slice.
     \item The \textit{Network Slice Instance} (NSI) as the complete, instantiated logical network that meets specific characteristics required by a Service instance.
 \end{itemize}
-Hence, network slicing is sharing network infrastructure across different Service Instance(s) to meet network-specific requirements. Depending on the communication layer where a network operator implements network slicing, resource management, the network characteristics or the toolbox used to implement the network slice can change. Some examples, of the network characteristics requested by a Service Instance can be ultra-low-latency or ultra-reliability, etc \cite{alliance2016description,}. 
 
-The network slicing concept provides a framework for broad applicability across various industries. The majority of these scenarios envisioned to suit emerging and diverse business models based on the Network As A Service (NASS) approach, creating opportunities for intelligent services and a new business ecosystem \cite{kuklinski2019business,zhang2017network}., One of the main enablers to drive the network slicing is the 5G networks realization.
+Hence, network slicing is sharing network infrastructure across different Service Instance(s) to meet network-specific requirements. Depending on the communication layer where a network operator implements network slicing, resource management, the network characteristics or the toolbox used to implement the network slice can change. Some examples, of the network characteristics requested by a Service Instance can be ultra-low-latency or ultra-reliability, etc \cite{alliance2016description}. 
 
-5G supports a new generation of applications with diverse and stringent requirements in terms of capacity, latency, level of mobility, number of users, and user density. 5G actually defines three types of applications based on how their data needs to be treated:
+The network slicing concept provides a framework for broad applicability across various industries. The majority of these scenarios envisioned to suit emerging and diverse business models based on the Network As A Service (NASS) approach, creating opportunities for intelligent services and a new business ecosystem \cite{kuklinski2019business,zhang2017network,khan2020network}., One of the main enablers to drive the network slicing is the Fifth-generation (5G) networks realization. Due to the necessity to integrate multiple services with various performance requirements — such as high throughput, low latency, high reliability, high mobility, and high security — into a single physical network infrastructure, and provide each service with
+a customized logical network. being the Network Slicing the key technology to achieve the aforementioned goals. 
 
-\begin{itemize}
-\item Ultra Reliable Low Latency Communications (URLLC)
-\begin{itemize}
-\item Requires support for 1 ms latencies, 0.001% packet loss, user mobility up to 100km/h
-\item E.g., autonomous driving
-\end{itemize}
-\item Massive Machine Type Communications (mMTC)
-\begin{itemize}
-\item Requires support for 1 million devices per square kilometer, tens of bps bandwidth, and latency minimization for battery life optimization
-\item E.g., Massive IoT
-\end{itemize}
-\item Enhanced Mobile Broadband (eMBB)
-\begin{itemize}
-\item Requires Gbps bandwidth, real time or not
-\item  E.g., immersive UIs based on Augmented Reality / Virtual Reality
-\end{itemize}
-\end{itemize}
+Due to the 5G expectation of supporting of a new generation of customer-tailored applications with diverse and stringent requirements (e.g., in terms of capacity, latency, level of mobility, number of users, and user density), 5G sets the stage for innovation and transformation in consumer services and vertical industries, such as real-time services, location-based services, and mission-critical services, as the ones described in the \cref{TAB1} \cite{foukas2017network}.
+
+
+\begin{table}[htb!]
+\caption{TAB1:}
+\label{TAB1}
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+
+\textbf{Applications} & \textbf{Definition}& \textbf{Example} \\ \hline \hline
+
+\begin{tabular}[c]{@{}l@{}}Ultra Reliable Low \\ Latency Communications \\ (uRLLC)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Requires support for 1 ms \\ latencies, 0.001\% packet loss,\\ user mobility up to \\100km/h\end{tabular}  & \begin{tabular}[c]{@{}l@{}} Autonomous driving or \\ Industrial automation \end{tabular} \\ \hline
+
+\begin{tabular}[c]{@{}l@{}}Massive Machine \\ Type Communications \\ (mMTC)\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Requires support for 1 million \\ devices per square kilometer, \\ tens of bps bandwidth, \\ and latency minimization \\ for battery life optimization\end{tabular} & Massive IoT \\ \hline
+
+
+\begin{tabular}[c]{@{}l@{}}Enhanced Mobile \\ Broadband (eMBB)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Requires Gbps bandwidth, \\ real time or not \end{tabular}& \begin{tabular}[c]{@{}l@{}}Immersive UIs based \\ Augmented Reality \\ Virtual Reality.\\ Streaming of \\ High Quality Video\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+The services described in \cref{TAB1} demonstrate highly diversified traffic characteristics and differentiated quality-of-service (QoS) requirements. For example, the mMTC is based on its application in machine-to-machine communication \cite{huang20205g}. The actual realization of those services in telecom networks implies the migration of the current heterogeneous IP/MPLS + DWDM transmission networks to more modern and 5G-ready designs, using the Network programmability, Software-Defined Networking (SDN) and Machine Learning (ML) as their main pillars. 
+
+Implementing the network slices has two main alternatives: Hard and Soft. The way the network resources are shared between the services in each alternative is described in the following sections. 
 
 \subsection{Soft Network Slicing}
+\label{sec:soft}
 
-Network slicing at the MPLS level can be implemented using Virtual Routing and Forwarding (VRF), that enables multiple routing environments over a shared MPLS transport network, and Virtual switching Interfaces (VSI), that enables multiple switching environments over the same shared infrastructure. Each physical router is able to host multiple VRFs and multiple VSIs (along with their attached logical interfaces), effectively slicing it into multiple routing and switching environments that can be assigned to different tenants.
+Soft slicing corresponds to a lower level of isolation between the services a network is transporting. Soft slicing implies sharing the physical infrastructure but creates logical segmentations between the customers. According to this definition, soft slicing is not a new concept from the IP/MPLS networks perspective \cite{rosen2006rfc,l3sm2017Litkowski,Aguado.2021l3nm}. 
 
-This slicing of a shared MPLS transport network into multiple routing/switching environments assigned to different tenants, with MPLS paths in each environment subject to potentially different QoS treatment, is known as soft network slicing.
+Traditional L3VPNs are samples of soft-slicing implementations in an MPLS network, because a VPN can be thought of as a series of tunnels connecting customer sites, each site can potentially have different QoS treatment, and all traffic to and from each site is internal to the customer. In the VPN service, the provider ensures that each customer's traffic is logically discriminated over shared physical infrastructure based on routing policies configuration across the network. 
+
+In that sense, Network slicing at the MPLS level can be implemented using: 
+\begin{itemize}
+    \item \textbf{Virtual Routing and Forwarding} (VRF), that enables multiple routing environments over a shared MPLS transport network.
+    \item \textbf{Virtual Interfaces} (VSI), that enables multiple switching environments over the same shared infrastructure. 
+\end{itemize}
+
+Each physical router is able to host multiple VRF(s) and multiple VSI(s) (along with their attached logical interfaces), effectively slicing it into multiple routing and switching environments that can be assigned to different tenants/customers/services.
+
+%In the optical network the concept is also well known and the soft-slicing can be mapped with the and virtual containers and optical data unit (ODU) running on top of a L0/L1 shared underlay. 
 
 \subsection{Hard Network Slicing}
+\label{sec:hard}
 
-VRFs and VSIs cannot be managed by their corresponding tenants directly because they are part of the same administrative domain represented by the physical router, and they instead need to be managed by the operator that owns the physical routing infrastructure.  
-Disaggregated routers, with data plane running in the physical device, and with the control plane running outside the device in a remote cloud or remote server, are able to disassociate the 1:1 relationship between physical device and router, thus enabling the support of multiple virtual routers over a single physical network device. 
+Despite the apparent advantages that an overlay MPLS tunnels could provide, there are some disadvantages. Overlay tunnels built by data encapsulation have neither visibility nor control of the underlying physical network. With more and more tunnels deployed on shared physical infrastructure, network congestion necessarily becomes an attention point.  Thus, VRFs, VSIs or ODus cannot be managed by their corresponding tenants directly because they are part of the same administrative domain represented by the physical device, and they need to be operated by the network administrator. Due to the massive number of tunnels and services in a complex network, the QoS and Traffic Engineering policies management becomes a crucial task to guarantee the right SLAs to its customers \cite{huang20205g,marotta2020reliable}.
 
-Each of these virtual routers is a router in its full sense, being able to host multiple VRFs and VSIs, or to be managed independently of the other virtual routers running in the same device. Virtual routers are thus administratively separated from each other, which means separate virtual routers can be assigned to different tenants, and each tenant can manage the virtual routers directly, without the need from the operator that owns the physical network to intervene. 
+The solution to this limitation and the way to move the networking industry to more automated scenarios is Hard slicing. Hard-slicing refers to the provision of dedicated resources to a specific Network Slice Instance. For example, Data-plane resources are provided by allocating time-domain multiplexed resources such as a Flex Ethernet channel or as a service such as an MPLS hard-pipe, route diversity (disjoint paths), wavelength selection, among others.  
 
-Network slicing at the IP transport level can then be accomplished with grouping multiple virtual routers running over a shared physical network infrastructure into a common virtual infrastructure under its own separate administrative domain. The set of virtual routers under the same administrative domain is then known as hard network slicing, and mechanisms such as Role Based Access Control (RBAC) can be used to assign different hard slices to different tenants.
+Disaggregated routers is an example of hard-slicing. In the disaggregated case, the data plane runs in the physical device, and the control plane runs outside the device in a remote cloud or server. In that case, the 1:1 relationship between physical device and routing logic is disassociated, enabling the support of multiple virtual routers over a single physical network device. Each of these virtual routers is a router in its full sense, being able to host multiple VRFs and VSIs, or to be managed independently of the other virtual routers running in the same device. Virtual routers are thus administratively separated from each other, which means separate virtual routers can be assigned to different tenants, and each tenant can manage the virtual routers directly, without the need from the operator that owns the physical network to intervene intervene (e.g., following an approach similar to the one described in \cite{contreras2021architecture})
 
-Finally, technologies such as FlexE can also be used to enable separate physical connectivity for different hard network slices sharing the same devices and interconnecting links.
+Network slicing at the IP transport level can then be accomplished by grouping multiple virtual routers running over a shared physical network infrastructure into a common virtual infrastructure under its separated administrative domain. Virtual routers under the same administrative domain are then known as hard network slice, so different hard slices can be assigned to different tenants.
 
 \subsection{5G network slicing}
 
-A 5G cellular network has three main components: the radio access network (RAN), the mobile core (MC) and the backhaul network that interconnects the RAN with the mobile core. 
+5G must enable network operators to ensure the same network can fulfil the heterogeneous demands of diverse types of applications. To efficiently achieve those requirements and determining how network resources are assigned, a service provider must integrate technologies like Software-Defined Networking (SDN), Network Functions Virtualization (NFV), and Machine Learning (ML)  with a hierarchical transport architecture. 
+
+According to the 5G definition the architecture has three main components \cite{etsi2018123,redana20195g}:
 
 \begin{itemize}
-\item  The Radio Access Network (RAN)  is specified within 5G, and it covers everything related to the air interface between the user element and the base station.
+\item  \textbf{Radio Access Network (RAN)}: It covers everything related to the air interface between the user element and the base station. The RAN interfaces and interconnections is specified within 3G PPP Architecture Working Group. 
 
-\item  The Mobile Core (MC) is also specified within 5G, and its main role is to act as a gateway for user traffic to and from the greater internet (user plane), to manage user mobility, authentication, registration, etc (control plane), and to establish per-user tunnels between user plane and base stations for each different traffic type.
+\item  \textbf{Mobile Core (MC)}: Its central role is to act as a gateway for user traffic to and from the internet. The mobile core is composed of a set of network functions (NF) responsible for managing user mobility, access authentication, access authorization, location service management, registration, and establish per-user tunnels between base stations for each different traffic type.
 
-
-\item The Backhaul Network is the network that interconnects the RAN with the MC. It is not part of the 5G specification, so it is up to each network operator to decide how to implement it. It requires functionalities such as QoS, timing synchronization, MPLS, and segment routing.
+\item \textbf{Backhaul Network} is the network that interconnects the RAN with the MC. It is not part of the 5G specification, so it is up to each network operator to decide how to implement it. It requires functionalities such as QoS management,  synchronization and a stack of protocols like IP/MPLS or segment routing.
 \end{itemize}
 
-The network slicing described so far applies to the mobile backhaul network, but not RAN or the MC. Instead, 3GPP defined the Network slicing in 5G, specifying how network operators can use distributed software components to implement virtual schedulers in RAN and service meshes in Mobile Core.
+Network slicing capabilities need to be available across all components of the 5G cellular network (RAN, MC, Backhaul network) in order to ensure a differentiated treatment of the packets in the network. Thus, the 5G working groups have specified a standard set of network slices, denoted Standardized Slice Type (SST), to determine how resources should be assigned at the RAN and MC \cite{ferrus2018automation}.   
+%\begin{itemize}
+%    \item \textbf{SST}1 applies to eMBB 
+%    \item \textbf{SST}2 applies to URLLC
+%    \item \textbf{SST}3 to mMTC.
+%\end{itemize}
 
-5G enables network operators to ensure the same network can fulfill the heterogeneous requirements of these diverse types of applications by determining how network resources are assigned to application traffic. This is defined as network slicing. 5G actually specifies a standard set of network slices, denoted Standardized Slice Type (SST), in order to determine how resources need to be assigned at the RAN and at the MC level to fulfill the requirements of different types of applications. For example, SST1 applies to eMBB, SST2 applies to URLLC, and SST3 to mMTC.
-
-Network slicing capabilities need to be available across all components of the 5G cellular network (RAN, MC, Backhaul network) in order to ensure this differentiated treatment end to end, for example from the moment user traffic enters the RAN to the moment it exits the MC user plane towards the Internet. 5G specifies how network slicing is implemented in RAN and MC, but it does not specify how the backhaul network achieves it, so it is up to each network operator to determine how to accomplish it.
+%for example from the moment user traffic enters the RAN to the moment it exits the MC user plane towards the Internet. 5G specifies how network slicing is implemented in RAN and MC, but it does not specify how the backhaul network achieves it, so it is up to each network operator to determine how to accomplish it.
 
 5G specifies two mechanisms for network slicing. The first one is based on QoS techniques, by applying a dynamic allocation of available network resources to different classes of traffic, and it is denoted as soft network slicing. The second one takes advantage of the software-based, cloud-based architecture of 5G, as well as component disaggregation, and achieves slicing through 5G component virtualization and replication. This second approach is denoted hard network slicing.
 
+%The network slicing described so far applies to the mobile backhaul network, but not RAN or the MC. Instead, 3GPP defined the Network slicing in 5G, specifying how network operators can use distributed software components to implement virtual schedulers in RAN and service meshes in Mobile Core.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Instantiating of Network Slices in SDN transport networks - Oscar}
+\section{Proposed architecture}
+\label{sec:arch}
 
-
-\subsection{Hierarchical Network Controller} 
-
-\subsection{Network Slice Controller} 
- 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Proposed architecture - Victor}
-
-%Figure \ref{fig:scheme}.a shows a network scheme of the approached concept. It consists of three main domains: SDN domain, IP domain, and optical domain. 
-
-%The Network Slice Controller (NSC) realizes a transport network slice in the underlying transport infrastructure, maintains and monitors the  state of its resources.  The NSC will delegate on SDN Domain controllers \cite{ifusion} to configure the network resources. The NSC receives a transport network slice request from the Operation Support System and Business Support System (OSS/BSS). The request is modeled uing the YANG data model defined in \cite{transportslicemodel} by means of the RESTCONF protocol \cite{restconf}. Internal workflow for transport network slice life-cycle management is prepared on top of L2/L3 service management (SM) workflows. In order to interact with underlying IP and Optical Domain controllers via a RESTCONF client.
+The i\uppercase{FUSION} architecture is an architecture defined by Telefonica to strengthen the network automation and programmability in a service provider environment, as depicted in \cref{fig:architecture} \cite{contreras2019ifusion}. i\uppercase{FUSION} is a two-layer control architecture, with specific domain controllers per technological domain (IP/MPLS, microwave and optical) in the bottom and a Software-Defined Transport Network controller (SDTN controller) to handle the multi-layer and multi-domain transport network resources.  The domain controllers directly communicate with the network elements and the SDTN controller with the OSS/BSS systems. More than the functional block definition, i\uppercase{FUSION} includes the usage of: (1) Standard interfaces based on \uppercase{RESTconf/YANG} \cite{bierman2017restconf} for the communication between control components and \uppercase{NETCONF/YANG} \cite{enns2011network} to configure the network elements; (2) YANG data models based on latest releases in the standards-development organizations (SDOs): \uppercase{IETF}, \uppercase{ONF} and OpenConfig.
 
 \begin{figure}[tb]%[htdp]
 \centering
 	\centering
-		\includegraphics[width=\linewidth]{arch.png}
-\vspace{-7pt} \caption{a) Overall proposed architecture; and b) Sequence diagram for multiple network slice deployment with isolation characteristics.}
-\label{fig:scheme}
-\vspace{-17pt}
+		\includegraphics[width=\linewidth]{Figs/diagram-1.png}
+\caption{Overall proposed architecture}
+\label{fig:architecture}
 \end{figure}
 
-%The OSS/BSS may request that the deployed network slice is isolated from any other network slices or different services delivered to the same customers. Naturally, other network slices or services must not negatively impact the requested transport network slice's delivery. There are several possibilities to provide this isolation, which can be provided at several degrees, such as dedicated allocation of resources for a specific slice or sharing some network resources. Figure \ref{fig:results}.a shows the multiple isolation options that range from a hard slice to a soft slice: a) no-isolation, meaning that slices are not separated; b) physical-isolation, where slices are completely physically separated, for example, in different locations; c) logical-isolation, where slices are logically separated, only a certain degree of isolation is performed through QoS mechanisms; d) process-isolation, where slices include process and threads isolation; e) physical-network-isolation, where slices contain physically separated links; f) virtual-resource-isolation, where slices have dedicated virtual resources; g) network-functions-isolation, where Network Function (NF) are dedicated to a single network slice; h) service-isolation, where virtual resources and NFs are shared.
+\Cref{fig:architecture} shows the network scheme of the i\uppercase{FUSION} architecture in terms of components and relationships among them. The following sections define each of the structural pillars in the architecture, including its role in network slicing.
+
+%\begin{figure}[tb]%[htdp]
+%\centering
+%	\centering
+%		\includegraphics[width=\linewidth]{Figs/arch.png}
+%\caption{a) Overall proposed architecture; and b) Sequence diagram for multiple network slice deployment with isolation characteristics.}
+%\label{fig:scheme}
+%\end{figure}
 
 %Figure \ref{fig:scheme}.b shows the proposed workflow to deploy hard and soft transport network slices. In the workflow, two isolated network slices are deployed. The first one allocates a connectivity service to interconnect both IP layer domains (see for reference Figure \ref{fig:scheme}.a). This triggers the necessary optical configuration mechanism to each of the underlying ROADMs (e.g., using OpenROADM protocol). 
 
@@ -265,43 +331,231 @@ Network slicing capabilities need to be available across all components of the 5
 %When a new isolated slice is requested, NSC can request a dedicated and isolated connectivity service to the underlying optical SDN controller. Figure \ref{fig:results}.b details the available connectivity constraint to provide disjoint path selection using ONF Transport API. It consists of including a diversity exclusion constraint with the previous connectivity service identifier. Later, at IP layer novel virtual routers are deployed to provide the requested degree of isolation.
 
 
+\subsection{Software Defined Transport Network Controller} 
+\label{sec:ifusionarch}
+
+The Software-Defined Transport Network Controller is a functional block with the following purposes \cite{contreras2019ifusion}; It is The main entry point from the OSS/BSS systems to the network. It is in charge of coordinating/providing services through several domains and layers. It has the multi-layer/multi-domain topological view of the network. The SDTN controller can split requirements based on the technological requirements. During this process, the SDTN controller can add/assign logical resources to be used by the network at the service implementation. The SDTN controller have two RESTCONF interfaces, one to process the OSS/BSS systems' requirements and one to send the specific requests to the domain controllers. TeraFlow project \cite{vilalta21eucnc} is proposing the development of a cloud-native SDN controller that will serve as SDTN.
+
+
+The SDTN controller can have incorporated the Network Slice Controller as a working piece of its implementation.
+
+\subsection{Network Slice Controller} 
+
+The Network Slice Controller (NSC) effectuates a transport network slice in the underlying transport infrastructure, manages and control the state of resources and topologies associated with it. The NSC receives a transport network slice request from the Operation Support System and Business Support System (OSS/BSS). The NSC runs an internal workflow for transport network slice life-cycle management and interacts with underlying IP and Optical Domain controllers via a RESTCONF client. As described in the following sections, depending on the NSC location in the architecture, the NSC will delegate to SDN Domain controllers to configure the network (\cref{sec:instantiation}.a and \cref{sec:instantiation}.b) or make it directly through a NETCONF SBI (\cref{sec:instantiation}.c). 
+
+The network slice controller is the key building block for control and management of network slice. It provides the creation/modification/deletion, monitoring an optimization of network slices in a multi-domain, a multi-technology and multi-vendor environment. It has two main functionalities defined in \cite{contreras2020slice,slicing2021framework}:
+\begin{itemize}
+    \item \textit{Map}: The NSC must Map the Network Slice requests to the underlying technology-specific infrastructure. Accordingly, It maintains a record of the mapping from user requests to slice instantiations, as needed to allow for subsequent control functions like modification or deletion.
+    \item  \textit{Realize}: The NSC should realize the network slice request using its SBI interface against the domain controllers in either physical or logical connectivity through VPNs or various tunnelling technologies such as Segment Routing, MPLS, etc. 
+\end{itemize}
+
+\subsection{Network Domain Controller} 
+
+The network domain controller (SDN Controller) is in charge of network elements (network domain). It has standard southbound interfaces to communicate with the network elements. The Domain controller SBI relies on using the Network configuration protocol (NETCONF) to interact with the underlying technology's network elements. The SDN controller also has a northbound interface to communicate with the SDTN controller or the OSS/BSS Systems using RESTCONF.
+
+\subsection{Yang Models for Network Controllers}
+
+As described until now, the three control elements: SDTN controller, Network Slicing Controller and Network Domain controllers, has standard SBI and NBI interfaces to communicate between them and against the network or the OSS/BSS systems. The standard interfaces are composed of selecting a protocol to transfer the data and YANG data models to define how the message is formed. For that sense, the YANG modelling activities have acquired significant relevance across the standardization entities. To such an extent that by 2019, the Number of correctly extracted YANG models from IETF drafts was 283, in the Broadband forum was 214, and in Openconfig was 137 \cite{benoit2020yang}; similarly, other organizations like the MEF, 3GPP or ONF produced YANG data models to describe technologies, protocols or connectivity services as well. Thus, navigating through the massive set of YANGs available and selecting the suitable pack of data models to define each functional block's interfaces becomes an essential task from the architectural definitions point of view. 
+
+To request and after instantiate the network slices a set of these data models are described as the experimental base of this work are described in the \cref{TAB2:models}.
+
+\begin{table}[htb]
+\caption{Set of these data models are described as the experimental base of this work}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Models}  & 
+\textbf{Description}  & 
+\textbf{Example} \\ \hline \hline 
+LxVPN  & 
+\begin{tabular}[c]{@{}l@{}}These models describe a VPN service \\ from the customer or network \\ operator point of view.\\\end{tabular} &
+\begin{tabular}[c]{@{}l@{}}L3SM: \cite{l3sm2017Litkowski} \\ L2SM: \cite{wen2018yang}\\ L3NM:\cite{Aguado.2021l3nm} \\ L2SM: \cite{barguil2021l2nm}\end{tabular} \\ \hline
+
+Traffic Engineering & 
+\begin{tabular}[c]{@{}l@{}}These models allow to manipulate \\ Traffic Engineering tunnels \\ within the network segment. \\ Technology-specific extensions \\ allow to work with a desired technology \\ (e.g. MPLS RSVP-TE tunnels, \\ Segment Routing paths,\\OTN tunnels, etc.)\\\end{tabular} & 
+\begin{tabular}[c]{@{}l@{}}TE:\cite{te2021Saad}\\ TE Topology:\cite{ietf2021tetopology,ietf2021tel3topology}\end{tabular} \\ \hline
+
+\begin{tabular}[c]{@{}l@{}}TE Service Mapping \\ extensions\end{tabular} & \begin{tabular}[c]{@{}l@{}}These extensions allow to specify \\ for LxVPN the details of an underlay \\ based on Traffic Engineering\\\end{tabular}& 
+\begin{tabular}[c]{@{}l@{}}Service \\Mapping: \cite{teas2021servicemapping} \end{tabular} \\\hline
+
+\begin{tabular}[c]{@{}l@{}}ACLs and \\ Routing policies\end{tabular}    & \begin{tabular}[c]{@{}l@{}}Even though ACLs and routing policies\\ are device models,\\It's exposure in the NBI of a domain\\controller allows to provide\\an additional granularity\\that the network domain\\controller is not able to infer on its own.\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}ACL: \cite{ietf2019acl}\\ Routing\\ Policy:\cite{ietf2021routingpolicy,ietf2021bgppolicy}\end{tabular}\\ \hline
+
+OTN  & \begin{tabular}[c]{@{}l@{}}As a part of the transport network,\\
+   OTN can provide hard pipes \\with guaranteed data isolation and\\
+   deterministic low latency, \\which are highly demanded in the Service\\
+   Level Agreement (SLA).\\\end{tabular} & \begin{tabular}[c]{@{}l@{}}OTN Slice: \cite{ietf2021otnslicing}\end{tabular}\\ \hline
+
+Slicing  & \begin{tabular}[c]{@{}l@{}}Set of data models available to map \\ and realize the network Slices.\\ \end{tabular} & \begin{tabular}[c]{@{}l@{}}Network Slice\\ NBI:\cite{slicing2021framework,contreras2020slice}\\ \end{tabular} \\ \hline
+\end{tabular}
+\label{TAB2:models}
+\end{table}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results}
+\subsection{Instantiating of Network Slices in SDN transport networks}
+\label{sec:instantiation}
+
+As described before in the \cref{sec:ifusionarch}, the OSS/BSS systems may request the deployment of a new network slices with certain transport characteristics. Each network slice must be isolated from any other network slices or different services delivered to particular customers and naturally, other network slices or services must not negatively impact the requested transport network slice's delivery. 
+
+To provide this isolation and instantiate the slice in the network there are certain implementation options ranging from softer to hardest grades of isolation, as follow:  
+
+\begin{itemize}
+    \item No-isolation: meaning that slices are not separated.
+    \item Logical-isolation: where slices are logically separated, only a certain degree of isolation is performed through QoS mechanisms.
+    \item Service-isolation: where virtual resources and NFs are shared.
+    \item Process-isolation: where slices include process and threads isolation. 
+    \item Virtual-resource-isolation: where slices have dedicated virtual resources.
+     \item Network-functions-isolation: where Network Function (NF) are dedicated to a single network slice.   
+    \item Physical-isolation: where slices are completely physically separated, for example, in different locations.
+    \item Physical-network-isolation: where slices contain physically separated links. 
+\end{itemize}
+
+As the isolation grade is a significant constraint to consider for the network slice implementation, the selected network infrastructure and the control elements selected would generate different sets of capabilities in the Network Slice Controller. \Cref{fig:instantiation} describes three of the possibilities analyzed from the point of view of the mapping and realization tasks of the Network Slice Controller:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item \textbf{Network Slice Controller as part of the hierarchical controller:}
+When the Network Slice Controller is a Hierarchical SDN controller module, the NSC's and the Hierarchical Network Controller should share the same internal data and the same NBI. Thus, to process the customer, view the H-SDN module must be able to:
+
+\begin{itemize}
+    \item \textit{Map}: The customer request received using the must be processed by the NCS. The mapping process takes the network-slice SLAs selected by the customer to available Routing Policies and Forwarding policies.
+    
+    \item  \textit{Realize}: Create necessary network requests. The slice's realization can be translated into one or several LXNM Network requests, depending on the number of underlay controllers. Thus, the NCS must have a complete view of the network to map the orders and distribute them across domains. The realization should include the expansion/selection of Forwarding Policies, Routing Policies, VPN policies, and Underlay transport preference.    
+\end{itemize}
+
+To maintain the data coherence between the control layers, the \texttt{network-slice-id} used  must be directly mapped to the  \texttt{transport-instance-id} at the VPN-Node level.     
+    \item \textbf{Network Slice Controller as an stand-alone controller:}
+
+When the Network Slice Controller is a stand-alone controller module, the NSC's should perform the same two tasks described before:
+
+\begin{itemize}
+    \item \textit{Map}: Process the customer request. The customer request can be sent using the [draft-liu-teas-transport-network-slice-yang-01]. This draft allows the topology mapping of the Slice request. 
+    
+    \item  \textit{Realize}: Create necessary network requests. The slice's realization will be translated into one LXNM Network request. As the NCS has a topological view of the network, the realization can include the customer's traffic engineering transport preferences and policies.
+\end{itemize}
+
+    \item \textbf{Network Slice Controller at the domain controller level:}
+
+The Network Slice Controller can at the same level as the network domain controllers. The SDTN controller should handle the slices request, and the realization can be done by the NSC directly communicating with the Network Elements. The SDTN controller should create unified network views, including each transport domain and the network slices.
+
+\begin{itemize}
+
+    \item \textit{Map}: The SDTN would Process the customer request. The customer request can be sent using the [draft-liu-teas-transport-network-slice-yang-01]. This draft allows the topology mapping of the Slice request. 
+    
+    \item \textit{Realize}: The realization can be done by the NCS controller applying the service logic to create policies directly on the Network elements. The SDTN should handle the shared resources management between domains. 
+\end{itemize}    
+    
+    \item \textbf{Network Slice Controller as part of the domain controller:}
+    
+When the Network Slice Controller is part of the domain controller, the OSS/BSS systems process the Slices requests and introduce the network abstraction layer. At the network level, the same device data model would be used in the NBI and SBI of the SDN controller. The direct translation would reduce the service logic implemented at the SDN controller level, grouping the mapping and translation into a single task. :
+
+\begin{itemize}
+    \item  \textit{Map & Realize}:The mapping and realization can be done by the Domain controller applying the service logic to create policies directly on the Network elements.
+\end{itemize}
+
+\end{enumerate}
+
+\begin{figure}[htb]%[htdp]
+\includegraphics[width=\linewidth]{Figs/diagram-2.png}
+\caption{Possible Network Slice instantation in a service provider network.A) Network Slice Controller as part of the hierarchical controller, B) Network Slice Controller as an independent hierarchical controller, C) Network Slice Controller as an independent domain controller and D) Network Slice Controller as part of the domain controller}
+\label{fig:instantiation}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Validation}
+\label{sec:results}
+
+The experimental testbed has been distributed between Telefónica and CTTC laboratory premises, as depicted in Figure \ref{fig:scheme}. The testbed includes two layers, a control layer and a transport layer.  
+
+Telefonica and CTTC deployed a control layer composed of three relevant items. First, to receive all the service requests, a Network Slice Controller was developed as part of the SDTN controller. Second, to interact with the transport domains, the testbed included Two (2) controllers, one for IP and one for Optical. To configure the routers, the IP SDN Controller used gRPC, while the Optical SDN controller used Netconf with T-API for the configuration tasks.
+
+The physical transport layer was composed of:
+
+\begin{itemize}
+    \item Two (2) 7316 Edgecore switches running ONIE.
+    \item Two (2) Spirent traffic generator.
+    \item Four (4) Flexi-grid DWDM nodes.
+\end{itemize}
+
+The  Edgecore used a 10 Gigabit Ethernet (10G) interface for the connection against the Spirent testers and 1G interfaces to the Optical devices. Furthermore, on each Edgecore, two (2) separate virtual routers were configured to test redundancy and route filtering between the ends. The Network Operating system (NOS) running on the virtual-routers were volta-stack deployment version \texttt{20.4-2-36-g0ba8807}. 
+
+\begin{figure}[tb]%[htdp]
+\includegraphics[width=\linewidth]{Figs/diagram-6.png}
+\caption{Network Design, including the Logical and Physical Infrastructure to support the test cases.}
+\label{fig:scheme}
+\end{figure}
+
+As we have described previously, there are several requirements for network automation for network slicing. However, a service provider can not all treat all the needs in the same way. Thus, a set of use cases were designed and executed as part of the whole testing process, the use cases were the following:
+
+\begin{enumerate}
+    \item Slice Creation: To request a Standards-Based and Model-Driven isolated Network Slices using . The SDTN controller would receive and translate the network slice service into specific per domain requests as follows:
+    \begin{enumerate}
+        \item  L3VPN service creation: In this use case, each network slice request requires an L3VPN service creation; thus, each L3VPN service would map to a single network slice. The endpoints defined in the slice request would map to Virtual Router and Forwarding (VRFs) instances on the virtual routers. The Yang data model used for the SDTN requests the L3VPN services to the IP domain controller was the L3NM \cite{Aguado.2021l3nm}.
+        \item  DWDM connectivity: The T-API \cite{vilalta2018experimental} was used to create a new connectivity service in the transport network to enable the L2-L1 communication between the network slice endpoints. 
+    \end{enumerate}
+    \item Add Prefixes and destroy: The second use case expects to validate the IP connectivity between the network slices. Hence the Spirent testers announced a set of 5k IP prefixes through the prior created network slices. Afterwards, the testers make an automatic IP reachability test and a CLI route redistribution validation. Once the route propagation was validated, the testing team stopped all the Spirent prefixes' announcement, and a new automatic connectivity test was done.  
+        \begin{enumerate}
+            \item Device recovery test:  The third use case was to verify the network slices service continuity so. The testing team manually rebooted all the DCSGs. Once the devices got online again, we have checked the service status with a measurement of the service restoration time.
+      \end{enumerate}
+\end{enumerate}
+
+\subsection{Slice Creation}
+
+The iFusion architecture enhancement proposed for this paper performs the management of services and resources through the use of information models that capture the definitions of managed entities in terms of attributes and supported operations. Hence, a set of Yang Data models has been defined to render and realize a network slice between each of the control entities. The workflow proposed used postman to simulate, the network slice creation requests. The YANG data-model used for this request was defined in \cite{liu2020slice}. It includes the endpoints, the customer information and the service level agreement of the slice requests. The PE-CE and the end-to-end connectivity protocols for the network slice realization was automatically expanded by the SDTN controller and received by the IP SDN controller to properly configure the network elements.  Each network slice, The workflow can be seen in the \cref{fig:slicecreation}.
+
+\begin{figure}[htb]
+\includegraphics[width=\linewidth]{Figs/slicecreation.png}
+\caption{Workflow used to instantiate the network slices in the network. From Postman, a user sends a slice request to the SDTN controller. The SDTN controller automatically split the request based on technological requirements. The L3NM and the T-API are used for the IP and Optical domains, respectively.}
+\label{fig:slicecreation}
+\end{figure}
 
 
-%The experimental testbed has been set-up at Telefónica (NSC deployment and Volta Elastic Virtual Routing Engine stacked in 7316 Edgecore hardware) and CTTC laboratories (including a T-API SDN controller over a flexi-grid 4-nodes DWDM network), as depicted in Figure \ref{fig:scheme}.a. In order to properly set-up transport, we have introduced the transport network slice YANG data model in the RESTCONF server of NSC. An example of requested transport network slice is depicted in Figure \ref{fig:results}.c. It can be observed that several levels of isolation can be requested per node, link and slice. 
+\subsection{Add Prefixes and destroy}
 
+Once the domain controller realized the network slices, and we have validated the service status. The next step vas to verify the correct establishment of the data-plane sessions. Thus, the Spirent testers added 5k prefixes to each of the services(VRF-Blue and VRF-Red). To confirm the status of each service, we have captured the virtual routers BGP information, as depicted in \cref{fig:sliceresults}, where each VRF has 5002 prefixes received (PfxRcd). 
+
+\begin{figure}[htb]
+\includegraphics[width=\linewidth]{Figs/sliceresults.png}
+\caption{Comparison of the Prefixes received and Sent in each of the network slices deployed in the network. Each Network slice (Blue and Red) has 5K prefixes announced.}
+\label{fig:sliceresults}
+\end{figure}
+
+\begin{figure}[htb]
+\includegraphics[width=\linewidth]{Figs/sliceresults2.png}
+\caption{Depicts comparing the counters in the network slice Blue,  prior (Up) and after (Down) the device reboot. Once the devices are down, the counters go down to zero; after $4.6$ minutes and once the device is ready, the counters move up again. }
+\label{fig:sliceresults2}
+\end{figure}
+
+After the end-to-end service creation and control and data plane validation, we have rebooted the devices to validate the service continuity after a simulated power failure. We validate that after the recovery was complete, all the traffic flows again between the network slices. To confirm the status of each device, we have captured the counters before and after the reboot process \cref{fig:sliceresults2}.  Each instance recovered sequentially, and it took up to $4.6$ minutes for the latest service to completely restore the traffic flow. 
+
+
+%In order to properly set-up transport, we have introduced the transport network slice YANG data model in the RESTCONF server of NSC. An example of requested transport network slice is depicted in Figure \ref{fig:results}.c. It can be observed that several levels of isolation can be requested per node, link and slice. 
 %In order to validate the depicted sequence diagram in Figure \ref{fig:scheme}.b, we provide the captured Wireshark traces among the complete system to deploy a complete hard slice request (the figure provides the selected significant traces). In this figure the different involved protocols can be observed. Firstly it shows the request for the transport network slice. It is quickly stored and answered, as it is processed after response (later an status update might be requested). 
 
 %The transport network slice requests physical network isolation for the solicited link, thus a T-API connectivity service is requested including as connectivity constraints the diversity exclusion option. For that, we provide the identifiers from the previous established connectivity services and we obtain a disjoint path for the new requested slice, resulting in the requested physical network isolation (Figure \ref{fig:results}.b). It can be appreciated that the connectivity service setup time is 2.001s. Consider that the ADRENALINE testbed already has the paths equalized. 
 
-\begin{figure}[tb]%[htdp]
-\centering
-	\centering
-		\includegraphics[width=\linewidth]{results.png}
-\vspace{-7pt} \caption{a) Network Slice isolation levels; b) Disjoint path selection using ONF Transport API; c) Example of transport slice request; and d) Wireshark captures for deployment of a hard slice.}
-\label{fig:results}
-\vspace{-17pt}
-\end{figure}
-
+%\begin{figure}[tb]%[htdp]
+%\includegraphics[width=\linewidth]{Figs/results.png}
+%\caption{a) Network Slice isolation levels; b) Disjoint path selection using ONF Transport API; c) Example of transport slice request; and d) Wireshark captures for deployment of a hard slice.}
+%\label{fig:results}
+%\end{figure}
 
 %Finally, the virtual routers (vRouter) are created and properly setup. The Wireshark capture shows the internal gRPC protocol from Volta Networks, which is equivalent to OpenConfig calls, for the vRouter deployment and configuration. It includes a call to create a new vRouter on top of Edgecore hardware. Then, interfaces are incorporated to the vRouter and configured. Later, Virtual routing and forwarding (VRF) table is setup and finally interfaces are attached to the VRF. This process set-up delay is of 8.36s. 
 
 
 
-\section{Conclusions - Victor}
+\section{Conclusions}
+\label{sec:conclusions}
 
-%We have presented and validated an end-to-end architecture that allows the deployment of transport network slices with several degrees of isolation. The results indicate the feasibility of deployment of multi-layer IP over DWDM transport network slices bsed on virtual roauters and optical disjoint paths to provide hard isolation. Soft isolation is instead reached through connectivity constraints and L2VPN service router configuration.
+Dealing with the necessity of a dynamic network resources allocation to provide a new generation of customer-tailored applications is a primary concern nowadays. In that sense, Telecom providers have to prepare their whole set of systems and network infrastructure to allow the introduction of end-to-end network automation. In that sense, this paper uses and validates the iFusion architecture defined by Telefonica, which is ready to support new use cases derived from the 5G adoption and transport network slices. Additionally, this work validates an end-to-end creation, modification and deletion of transport network slices with several degrees of isolation. Furthermore, the results indicate the feasibility of deploying multi-layer IP over DWDM transport network slices based on virtual routers and disjoint optical paths.  Future work testing the map and realization of network slices in the different NSC controller positions is required. This testing would allow us to fully understand the information exchanged/stored in each layer to make feasible the deployments in real networks. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
 
 
-\acknowledgments{In this section you can acknowledge any support given which is not covered by the author contribution or funding sections. This may include administrative and technical support, or donations in kind (e.g., materials used for experiments).}
+\acknowledgments{Work partially supported by the EC H2020 TeraFlow (101015857) and Spanish AURORAS (RTI2018-099178-I00).}
 
 
-\reftitle{References}
+\section{References}
 
 % Please provide either the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/) or the full name of the journal.
 % Citations and References in Supplementary files are permitted provided that they also appear in the reference list here. 
@@ -309,42 +563,15 @@ Network slicing capabilities need to be available across all components of the 5
 %=====================================
 % References, variant A: external bibliography
 %=====================================
-%\externalbibliography{yes}
-%\bibliography{your_external_BibTeX_file}
+\externalbibliography{yes}
+\bibliography{bibliography.bib}
 
 %=====================================
 % References, variant B: internal bibliography
 %=====================================
-\begin{thebibliography}{999}
+%\begin{thebibliography}{999}
 % Reference 1
-\bibitem{transportslice21}
-R. Rokui, et al., Definition of IETF Network Slices, IETF draft draft-ietf-teas-ietf-network-slice-definition-00, 2021.
-
-\bibitem{casellas20}
-R. Casellas, et al., Virtualization of disaggregated optical networks with open data models in support of network slicing. JOCN Feb 1;12(2):A144-54, 2020.
-
-%\bibitem{abno15}
-%A. Aguado, et al., ABNO: a feasible SDN approach for multi-vendor IP and optical networks, JOCN, 2015, Vol. 7. Iss. 2.
-
-\bibitem{tapiextensions20}
-R. Vilalta, et al., Transport API extensions for the interconnection of multiple NFV infrastructure points of presence. OFC, 2019.
-
-\bibitem{openconfig}
-A. Shaikh, et al., Vendor-neutral network representations for transport SDN. OFC, 2016.
-
-
-%\bibitem{yangslice}
-%X. Liu, et al., IETF Network Slice YANG Data Model, IETF draft draft-liu-teas-transport-network-slice-yang-02, 2020.
-
-\bibitem{transportslicemodel}
-X. Liu, et al., IETF Network Slice YANG Data Model, IETF draft-liu-teas-transport-network-slice-yang-02, 2020.
-
-\bibitem{ifusion}
-L. Contreras, et al., FUSION: Standards-based SDN Architecture for Carrier Transport Network. CSCN, 2018.
-
-\bibitem{restconf}
-A. Bierman, M. Bjorklund, K. Watsen, R. Fernando, RESTCONF protocol. IETF RFC 8040, 2017.
-\end{thebibliography}
+%\end{thebibliography}
 
 % If authors have biography, please use the format below
 %\section*{Short Biography of Authors}
