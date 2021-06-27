@@ -1,0 +1,149 @@
+%% journalrebuttal.tex
+%% Copyright 2020 Pranav Hosangadi
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Pranav Hosangadi.
+%
+% This work consists of the file journalrebuttal.cls and the demo
+% file journalrebuttal.tex
+%% 
+%%
+%% journalrebuttal.tex
+%% Example usage for journalrebuttal.cls: 
+%%    A LaTeX class to create rebuttal documents for journal
+%%    reviews
+%% Created: 2020-06-28
+%% Author: Pranav Hosangadi (pranav.hosangadi@gmail.com)
+%% https://github.com/pranavh/JournalRebuttal_LaTeX
+%% Last Modified: 2020-06-29
+%% Version: 1.0
+%%
+\documentclass[12pt]{journalrebuttal}
+
+\title{Packet Optical Transport Network Slicing with Hard and Soft Isolation}
+
+\author{S.~Barguil, V.~López, L.M.~Contreras, O. González de Dios, A.~Alcalá, C.~Manso, P.~Alemany, R.~Casellas, R.~Martínez, D.~González-Pérez, X. Liu, J.M.~Pulido, J.P. Fernández-Palacios, R.~Muñoz, R.~Vilalta}
+
+\journal{Applied Sciences}
+\manuscriptid{applsci-1270422}
+
+\usepackage{verbatim}
+\usepackage{changes}
+%% You can define Note commands using the \ColorNote command 
+%% provided in the class. 
+\newcommand{\PHNote}[1]{\ColorNote{red}{PH}{#1}}
+
+
+\begin{document}
+%\pagenumbering{arabic}
+\maketitle
+
+\vspace{0.5cm}
+\makerule
+\section*{Overview}
+
+We would like to thank the reviewers for the fruitful feedback as well as their time to carry out the review. We have incorporated most of their suggestions, which have resulted in a significant improve of the paper.
+
+\nextreviewer
+
+\begin{revcomment}
+This work focuses on studying the uses and validates of iFusion architecture defined by Telefonica. Which works on the validation of an end-to-end creation, modification and deletion of transport network slices with several degrees of isolation. 
+
+The presentation, exhibition and the results are well commented on in the text and the bibliography describes well the background on the subject matter and the contributions of the research group.  
+However, there are some requirements before publishing:
+\end{revcomment}
+
+\begin{revcomment}
+English and grammatical errors should be rectified during the revision of the paper.
+\end{revcomment}
+
+\begin{response}
+Thank you for the comment.  The authors have corrected typos and proofread the document to improve English usage and readability.
+\end{response}
+
+\begin{revcomment}
+The authors should also add the definition of abbreviations in the text, that some abbreviations are not defined. Eg.: BSS/OSS\_line3, YANG\_line11, L3VPNs\_line34, VPN\_line95, ODus-line113, etc.
+\end{revcomment}
+
+\begin{response}
+The authors enhanced the \Cref{tab:abbreviations} of the abbreviation to include the whole set of abbreviations and facilitate the paper understanding. 
+
+\begin{table}[htb!]
+\caption{List of abbreviations used across the document}
+\label{tab:abbreviations}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Abbreviation & \multicolumn{1}{c|}{Definition}              \\ \hline
+3GPP         & 3rd Generation Partnership Project           \\ \hline
+API          & Application programming interface            \\ \hline
+\added{BSS}  & \added{Business Support System}              \\ \hline
+\added{BGP}  & \added{Border Gateway Protocol}              \\ \hline
+\added{CE}   & \added{Customer Edge}                        \\ \hline
+IETF         & Internet Engineering Task Force              \\ \hline
+eMBB         & Enhanced Mobile Broadband                    \\ \hline
+L2SM         & L2VPN Service Model                          \\ \hline
+L2NM         & L2VPN Network Model                          \\ \hline
+L3SM         & L3VPN Service Model                          \\ \hline
+L3NM         & L3VPN Network Model                          \\ \hline
+\added{L3VPN}  & \added{Layer Three Virtual Private Network}\\ \hline
+MC           & Mobile Core                                  \\ \hline
+mMTC         & Massive Machine Type Communication           \\ \hline
+MPLS         & Multiprotocol Label Switching                \\ \hline
+NASS         & Network As A Service                         \\ \hline
+NGMN         & Next Generation Mobile Networks              \\ \hline
+NSI          & Network Slice Instance                       \\ \hline
+\added{ODU}  & \added{Optical Distribution Unit}            \\ \hline
+ONF          & Open Networking Foundation                   \\ \hline
+OSS          & Operation Support Systems                    \\ \hline
+\added{PE}   & \added{Provider Edge}                        \\ \hline
+QoS          & Quality of service                           \\ \hline
+RAN          & Radio Access Network                         \\ \hline
+SDN          & Software Defined Network                     \\ \hline
+SI           & Service Instance                             \\ \hline
+URLLC        & Ultra Reliable Low Latency Communications    \\ \hline
+VSI          & Virtual switching Interfaces                 \\ \hline
+\added{VPN}  & \added{Virtual Private Network}              \\ \hline
+VRF          & Virtual Routing and Forwarding              \\ \hline
+YANG         & Yet Another Next Generation                  \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+Furthermore, in the text some abbreviations was expanded to enhance the readability:
+
+\added{Thus, VRFs, VSIs or \added{Optical Data units} (ODus) cannot be managed by their corresponding tenants directly because they are part of the same administrative domain represented by the physical device, and they need to be operated by the network administrator.}
+\end{response}
+
+
+\begin{revcomment}
+Line 66 , "..ecosystem [9–11]., One.." Delete the extra comma "
+\end{revcomment}
+
+\begin{response}
+The authors replaced some minor nits found in the paper.
+\end{response}
+
+\begin{revcomment}
+Lines 73-78, Very long sentence and confused!!
+\end{revcomment}
+
+\begin{response}
+The authors has rephrased the sentence to enhance the readability:
+
+\added{5G expects to support a new generation of customer-tailored applications with diverse requirements regarding capacity, latency, level of mobility, number of users, and user density.  Hence, 5G sets the stage for innovation and transformation in customer services and vertical industries, such as the ones described in the Table 2 [12].}
+
+\end{response}
+
+\end{document}
+

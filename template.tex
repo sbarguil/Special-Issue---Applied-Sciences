@@ -61,6 +61,8 @@
 % Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, lineno, float, amsmath, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, soul, multirow, microtype, tikz, totcount, changepage, paracol, attrib, upgreek, cleveref, amsthm, hyphenat, natbib, hyperref, footmisc, url, geometry, newfloat, caption
 \usepackage{cleveref}
 \usepackage{enumitem}
+\usepackage{changes}
+%\usepackage[final]{changes}
 %=================================================================
 %% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
 %% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
@@ -180,27 +182,34 @@ The list of abbreviations and its definition is defined in \cref{tab:abbreviatio
 Abbreviation & \multicolumn{1}{c|}{Definition}              \\ \hline
 3GPP         & 3rd Generation Partnership Project           \\ \hline
 API          & Application programming interface            \\ \hline
+\added{BSS}  & \added{Business Support System}              \\ \hline
+\added{BGP}  & \added{Border Gateway Protocol}              \\ \hline
+\added{CE}   & \added{Customer Edge}                        \\ \hline
 IETF         & Internet Engineering Task Force              \\ \hline
-eMBB.        & Enhanced Mobile Broadband                    \\ \hline
+eMBB         & Enhanced Mobile Broadband                    \\ \hline
 L2SM         & L2VPN Service Model                          \\ \hline
 L2NM         & L2VPN Network Model                          \\ \hline
 L3SM         & L3VPN Service Model                          \\ \hline
 L3NM         & L3VPN Network Model                          \\ \hline
+\added{L3VPN}  & \added{Layer Three Virtual Private Network}\\ \hline
 MC           & Mobile Core                                  \\ \hline
 mMTC         & Massive Machine Type Communication           \\ \hline
 MPLS         & Multiprotocol Label Switching                \\ \hline
 NASS         & Network As A Service                         \\ \hline
 NGMN         & Next Generation Mobile Networks              \\ \hline
 NSI          & Network Slice Instance                       \\ \hline
+\added{ODU}  & \added{Optical Distribution Unit}            \\ \hline
 ONF          & Open Networking Foundation                   \\ \hline
 OSS          & Operation Support Systems                    \\ \hline
+\added{PE}   & \added{Provider Edge}                        \\ \hline
 QoS          & Quality of service                           \\ \hline
 RAN          & Radio Access Network                         \\ \hline
 SDN          & Software Defined Network                     \\ \hline
 SI           & Service Instance                             \\ \hline
 URLLC        & Ultra Reliable Low Latency Communications    \\ \hline
 VSI          & Virtual switching Interfaces                 \\ \hline
-VRF          & Virtual Routing and Forwarding.              \\ \hline
+\added{VPN}  & \added{Virtual Private Network}              \\ \hline
+VRF          & Virtual Routing and Forwarding              \\ \hline
 YANG         & Yet Another Next Generation                  \\ \hline
 \end{tabular}
 \end{table}
@@ -217,14 +226,14 @@ Network slicing refers to the partitioning of one physical network into multiple
 
 Hence, network slicing is sharing network infrastructure across different Service Instance(s) to meet network-specific requirements. Depending on the communication layer where a network operator implements network slicing, resource management, the network characteristics or the toolbox used to implement the network slice can change. Some examples, of the network characteristics requested by a Service Instance can be ultra-low-latency or ultra-reliability, etc \cite{alliance2016description}. 
 
-The network slicing concept provides a framework for broad applicability across various industries. The majority of these scenarios envisioned to suit emerging and diverse business models based on the Network As A Service (NASS) approach, creating opportunities for intelligent services and a new business ecosystem \cite{kuklinski2019business,zhang2017network,khan2020network}., One of the main enablers to drive the network slicing is the Fifth-generation (5G) networks realization. Due to the necessity to integrate multiple services with various performance requirements — such as high throughput, low latency, high reliability, high mobility, and high security — into a single physical network infrastructure, and provide each service with
+The network slicing concept provides a framework for broad applicability across various industries. The majority of these scenarios envisioned to suit emerging and diverse business models based on the Network As A Service (NASS) approach, creating opportunities for intelligent services and a new business ecosystem \cite{kuklinski2019business,zhang2017network,khan2020network}.\deleted{,} One of the main enablers to drive the network slicing is the Fifth-generation (5G) networks realization. Due to the necessity to integrate multiple services with various performance requirements — such as high throughput, low latency, high reliability, high mobility, and high security — into a single physical network infrastructure, and provide each service with
 a customized logical network. being the Network Slicing the key technology to achieve the aforementioned goals. 
 
-Due to the 5G expectation of supporting of a new generation of customer-tailored applications with diverse and stringent requirements (e.g., in terms of capacity, latency, level of mobility, number of users, and user density), 5G sets the stage for innovation and transformation in consumer services and vertical industries, such as real-time services, location-based services, and mission-critical services, as the ones described in the \cref{TAB1} \cite{foukas2017network}.
+\replaced{5G expects to support a new generation of customer-tailored applications with diverse requirements regarding capacity, latency, level of mobility, number of users, and user density.  Hence, 5G sets the stage for innovation and transformation in customer services and vertical industries, such as the ones described in the}{Due to the 5G expectation of supporting of a new generation of customer-tailored applications with diverse and stringent requirements (e.g., in terms of capacity, latency, level of mobility, number of users, and user density), 5G sets the stage for innovation and transformation in consumer services and vertical industries, such as real-time services, location-based services, and mission-critical services, as the ones described in the} \Cref{TAB1} \cite{foukas2017network}.
 
 
 \begin{table}[htb!]
-\caption{TAB1:}
+\caption{Possible Applications derived from the 5G implementations.}
 \label{TAB1}
 \centering
 \begin{tabular}{|l|l|l|}
@@ -265,7 +274,7 @@ Each physical router is able to host multiple VRF(s) and multiple VSI(s) (along 
 \subsection{Hard Network Slicing}
 \label{sec:hard}
 
-Despite the apparent advantages that an overlay MPLS tunnels could provide, there are some disadvantages. Overlay tunnels built by data encapsulation have neither visibility nor control of the underlying physical network. With more and more tunnels deployed on shared physical infrastructure, network congestion necessarily becomes an attention point.  Thus, VRFs, VSIs or ODus cannot be managed by their corresponding tenants directly because they are part of the same administrative domain represented by the physical device, and they need to be operated by the network administrator. Due to the massive number of tunnels and services in a complex network, the QoS and Traffic Engineering policies management becomes a crucial task to guarantee the right SLAs to its customers \cite{huang20205g,marotta2020reliable}.
+Despite the apparent advantages that an overlay MPLS tunnels could provide, there are some disadvantages. Overlay tunnels built by data encapsulation have neither visibility nor control of the underlying physical network. With more and more tunnels deployed on shared physical infrastructure, network congestion necessarily becomes an attention point.  Thus, VRFs, VSIs or \added{Optical Data units} (ODus) cannot be managed by their corresponding tenants directly because they are part of the same administrative domain represented by the physical device, and they need to be operated by the network administrator. Due to the massive number of tunnels and services in a complex network, the QoS and Traffic Engineering policies management becomes a crucial task to guarantee the right SLAs to its customers \cite{huang20205g,marotta2020reliable}.
 
 The solution to this limitation and the way to move the networking industry to more automated scenarios is Hard slicing. Hard-slicing refers to the provision of dedicated resources to a specific Network Slice Instance. For example, Data-plane resources are provided by allocating time-domain multiplexed resources such as a Flex Ethernet channel or as a service such as an MPLS hard-pipe, route diversity (disjoint paths), wavelength selection, among others.  
 
@@ -448,7 +457,7 @@ The Network Slice Controller can at the same level as the network domain control
 When the Network Slice Controller is part of the domain controller, the OSS/BSS systems process the Slices requests and introduce the network abstraction layer. At the network level, the same device data model would be used in the NBI and SBI of the SDN controller. The direct translation would reduce the service logic implemented at the SDN controller level, grouping the mapping and translation into a single task. :
 
 \begin{itemize}
-    \item  \textit{Map & Realize}:The mapping and realization can be done by the Domain controller applying the service logic to create policies directly on the Network elements.
+    \item  \textit{Map \& Realize}:The mapping and realization can be done by the Domain controller applying the service logic to create policies directly on the Network elements.
 \end{itemize}
 
 \end{enumerate}
@@ -499,7 +508,11 @@ As we have described previously, there are several requirements for network auto
 
 \subsection{Slice Creation}
 
-The iFusion architecture enhancement proposed for this paper performs the management of services and resources through the use of information models that capture the definitions of managed entities in terms of attributes and supported operations. Hence, a set of Yang Data models has been defined to render and realize a network slice between each of the control entities. The workflow proposed used postman to simulate, the network slice creation requests. The YANG data-model used for this request was defined in \cite{liu2020slice}. It includes the endpoints, the customer information and the service level agreement of the slice requests. The PE-CE and the end-to-end connectivity protocols for the network slice realization was automatically expanded by the SDTN controller and received by the IP SDN controller to properly configure the network elements.  Each network slice, The workflow can be seen in the \cref{fig:slicecreation}.
+The iFusion architecture enhancement proposed for this paper performs the management of services and resources through the use of information models that capture the definitions of managed entities in terms of attributes and supported operations. Hence, a set of Yang Data models has been defined to render and realize a network slice between each of the control entities. The workflow proposed used postman to simulate, the network slice creation requests. The YANG data-model used for this request was defined in \cite{liu2020slice}. It includes the endpoints, the customer information and the service level agreement of the slice requests. The PE-CE and the end-to-end connectivity protocols for the network slice realization was automatically expanded by the SDTN controller and received by the IP SDN controller to properly configure the network elements.  Each network slice, The workflow can be seen in the \cref{fig:slicecreation}. 
+
+\added{A capture of the messages exchanged between the control items is depicted in \Cref{fig:sliceworkflow2}. The Figure illustrates in Orange the messages exchanged for the Network Slice Creation using the IETF network slices data model. The subsequent statements show how the SDTN controller unwrapped the creation request message to the optical and IP domains. It illustrates in red the IP network massages using gRPC, including the access ports, routing protocols, and PE-CE connectivity parameters. In purple, the T-API messages have the connectivity and optical service requirements.} 
+
+\added{The time consumed in the Slices creation was $10.34$ seconds on average. The \Cref{fig:sliceworkflow}.a depicts a cumulative histogram of the time consumed for the slice creation in the controller layer using ten samples. Additionally, the \Cref{fig:sliceworkflow}.b shows the percentage of time spent for the VPN-instantiation in the Virtual routers. The most time-consuming task is the BGP Neighbours creation ($13$ seconds), followed by the BGP instance redistribution ($10$ seconds). In contrast, the device implemented the primary VPN configuration parameters (Rute-Distinghuiser, Route Target and Router ID) in less than a second.} 
 
 \begin{figure}[htb]
 \includegraphics[width=\linewidth]{Figs/slicecreation.png}
@@ -507,6 +520,17 @@ The iFusion architecture enhancement proposed for this paper performs the manage
 \label{fig:slicecreation}
 \end{figure}
 
+\begin{figure}[htb]
+\includegraphics[width=\linewidth]{Figs/sliceworkflow2.png}
+\caption{\added{Capture of the workflow used to instantiate the network slices in the network (Orange). The capture shows the IP network configuration (Red) and the T-API Optical domains (Purple).}}
+\label{fig:sliceworkflow2}
+\end{figure}
+
+\begin{figure}[htb]
+\includegraphics[width=\linewidth]{Figs/sliceworkflow.png}
+\caption{\added{A cumulative step histogram of the time consumed for the slice creation, and the time consumed in during the VPN instantiation in the vRoutes. }}
+\label{fig:sliceworkflow}
+\end{figure}
 
 \subsection{Add Prefixes and destroy}
 
